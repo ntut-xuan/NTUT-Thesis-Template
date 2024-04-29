@@ -17,10 +17,10 @@
 
 \renewcommand{\baselinestretch}{1.5}
 \xeCJKsetup{AutoFakeBold=true, AutoFakeSlant=true}
-\setCJKmainfont{標楷體}
-\setmainfont{Times New Roman}
-\geometry{a4paper,total={297mm,210mm},top=4.5cm,bottom=0.75cm,left=2.5cm,right=2.2cm}
-\pagestyle{plain}
+\setCJKmainfont{標楷體} % 中文字體
+\setmainfont{Times New Roman} % 英文字體
+\geometry{a4paper,total={297mm,210mm},top=4.5cm,bottom=0.75cm,left=2.5cm,right=2.2cm} % 頁面設定，不需修改
+\pagestyle{plain} % 頁碼
 \addbibresource{reference.bib}
 
 \input{ntut-labels.tex}
@@ -37,20 +37,29 @@
 
 % 封面、要浮水印
 \include{page/titlepage.tex}
+% 「學位論文口試委員會審定書」掃描檔
 \includepdf[pages=-]{static-page/signpage.pdf}
 
 \pagenumbering{roman}
 
+% 摘要頁（中文）
 \include{page/abstract.tex}
+% 摘要頁（英文）
 \include{page/abstract-en.tex}
+% 鳴謝
 \include{page/thanks.tex}
+% 目錄、表目錄與圖目錄
 \include{page/table-of-content.tex}
-
+ 
 \pagenumbering{arabic}
 
+% 章節一
 \include{chapter/chapter1-introduction.tex}
+% 章節二
 \include{chapter/chapter2-related-work.tex}
+% 新增你自己的章節...
 
+% 參考文獻，請在段落上隨意註解，你同時需要 reference.bib
 \include{page/reference}
 
 \end{document}
