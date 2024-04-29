@@ -47,6 +47,8 @@ xelatex main
 ./chapter
 ├── chapter1-introduction.tex <---- 章節一
 └── chapter2-related-work.tex <---- 章節二
+./static-page
+└── signpage.pdf <----------------- 「學位論文口試委員會審定書」掃描檔
 ./page
 ├── abstract-en.tex <-------------- 英文 abstract
 ├── abstract.tex <----------------- 中文 abstract
@@ -55,6 +57,11 @@ xelatex main
 ├── table-of-content.tex <--------- 各式各樣的目錄
 ├── thanks.tex <------------------- 致謝
 └── titlepage.tex <---------------- 首頁
+ntut-labels.tex <------------------ 各式各樣的 label 設定值
+ntut-logo-with-label.png <--------- 北科 Logo（有國立臺北科技大學字樣）
+ntut-logo.png <-------------------- 北科 Logo 浮水印
+ntut-reports.cls <----------------- LaTeX 樣式
+reference.bib <-------------------- 參考文獻 bib 檔
 ```
 
 ## 特別感謝
