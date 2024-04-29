@@ -16,7 +16,7 @@
 brew install texlive
 ```
 
-### Ubuntu
+#### Ubuntu
 ```
 sudo apt-get update
 sudo apt-get install texlive-full
