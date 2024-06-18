@@ -27,37 +27,39 @@
 
 \begin{document}
 
-% 封面、不用浮水印
+% 封面、不用浮水印 Cover without a watermark
 \include{page/titlepage.tex}
-% 留白頁、不用浮水印
+% 留白頁、不用浮水印 Blank page without a watermark
 \include{page/blankpage.tex}
 
-% 新增浮水印
+% 新增浮水印 Add Watermarks
 \CenterWallPaper{.64}{ntut-logo.png}
 
-% 封面、要浮水印
+% 封面、要浮水印 Cover with a watermark
 \include{page/titlepage.tex}
-% 「學位論文口試委員會審定書」掃描檔
+% 「學位論文口試委員會審定書」掃描檔，請檢附完整簽名之審定書掃描檔
+% Please add "Oral Defense Committee Signature Form" with complete signatures.
 \includepdf[pages=-]{static-page/signpage.pdf}
 
 \pagenumbering{roman}
 
-% 摘要頁（中文）
+% 摘要頁（中文）Abstract (Chinese)
+% If you don’t have Chinese abstract, please delete this one.
 \include{page/abstract.tex}
-% 摘要頁（英文）
+% 摘要頁（英文）Abstract (English)
 \include{page/abstract-en.tex}
-% 鳴謝
+% 鳴謝 Acknowledgements
 \include{page/thanks.tex}
-% 目錄、表目錄與圖目錄
+% 目錄、表目錄與圖目錄 Table of Contents, List of tables, List of figures
 \include{page/table-of-content.tex}
  
 \pagenumbering{arabic}
 
-% 章節一
+% 章節一 Chapter 1
 \include{chapter/chapter1-introduction.tex}
-% 章節二
+% 章節二 Chapter 2
 \include{chapter/chapter2-related-work.tex}
-% 新增你自己的章節...
+% 新增你自己的章節... Add chapters here
 
 % 參考文獻，請在段落上隨意註解，你同時需要 reference.bib
 \include{page/reference}
