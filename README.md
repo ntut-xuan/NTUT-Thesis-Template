@@ -33,6 +33,28 @@ sudo apt-get install texlive-full
 
 ### 編譯 .tex 檔案
 
+#### 1. 使用 Make 指令
+
+如果你沒有安裝 make，可以先安裝以下指令：
+
+```bash
+brew install make # macOS
+sudo apt install make # Ubuntu
+```
+
+- 編譯產生論文 pdf 檔案：`make` 或是 `make all`
+- 刪除編譯產生的檔案：`make clean`
+  
+#### 2. 使用 Shell Script
+
+不需要安裝其他指令，直接跑以下指令：
+
+```bash
+./build.sh
+```
+
+#### 3. 使用 XeLaTeX 的原始指令
+
 ```bash
 xelatex main
 bibtex main
