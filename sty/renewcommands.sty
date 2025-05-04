@@ -1,0 +1,23 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Redefine commands for different NTUT thesis language
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifthenelse{\equal{\ntutThesisLanguage}{en}}
+{
+  \renewcommand\acknowledgmentsName{Acknowledgments}
+  \renewcommand\figureName{Figure}
+  \renewcommand\tableName{Table}
+  \renewcommand\tableOfContentsName{Table of Contents}
+  \renewcommand\listOfFigureName{List of Figures}
+  \renewcommand\listOfTableName{List of Tables}
+  \renewcommand\referencesName{References}
+}
+{
+  \renewcommand\acknowledgmentsName{致謝}
+  \renewcommand\figureName{圖}
+  \renewcommand\tableName{表}
+  \renewcommand\tableOfContentsName{目錄}
+  \renewcommand\listOfFigureName{圖目錄}
+  \renewcommand\listOfTableName{表目錄}
+  \renewcommand\referencesName{參考文獻}
+}
