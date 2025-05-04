@@ -15,11 +15,24 @@
 \usepackage{amsmath}
 \usepackage[backend=bibtex,sorting=none]{biblatex}
 \usepackage{enumitem}
+\usepackage[nameinlink]{cleveref}
 
 \input{./labels/labels.sty}
 \input{./sty/basic-utils.sty}
 \input{./sty/layout.sty}
 \input{./sty/renewcommands.sty}
+
+% Use cleveref to automatically include labels like "Figure" and "Table" in \cref references.
+% 使用 cleveref 套件，讓 \cref 自動顯示「圖」、「表」等前綴。
+\ifthenelse{\equal{\ntutThesisLanguage}{en}}
+{
+    \crefname{figure}{\figureName}{\figureName{s}}
+    \crefname{table}{\tableName}{\tableName{s}}
+}
+{
+    \crefname{figure}{\figureName}{\figureName}
+    \crefname{table}{\tableName}{\tableName}
+}
 
 \pagestyle{plain} % 頁碼
 
