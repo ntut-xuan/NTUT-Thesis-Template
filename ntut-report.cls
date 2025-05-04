@@ -220,7 +220,7 @@
   \newcommand\maketitle{\begin{titlepage}%
   \let\footnotesize\small
   \let\footnoterule\relax
-  \let \footnote \thanks
+  \let \footnote \acknowledgments
   \null\vfil
   \vskip 60\p@
   \begin{center}%
@@ -234,13 +234,13 @@
       \vskip 1.5em%
     {\large \@date \par}%       % Set date in \large size.
   \end{center}\par
-  \@thanks
+  \@acknowledgments
   \vfil\null
   \end{titlepage}%
   \setcounter{footnote}{0}%
-  \global\let\thanks\relax
+  \global\let\acknowledgments\relax
   \global\let\maketitle\relax
-  \global\let\@thanks\@empty
+  \global\let\@acknowledgments\@empty
   \global\let\@author\@empty
   \global\let\@date\@empty
   \global\let\@title\@empty
@@ -268,13 +268,13 @@
       \global\@topnum\z@   % Prevents figures from going at top of page.
       \@maketitle
     \fi
-    \thispagestyle{plain}\@thanks
+    \thispagestyle{plain}\@acknowledgments
   \endgroup
   \setcounter{footnote}{0}%
-  \global\let\thanks\relax
+  \global\let\acknowledgments\relax
   \global\let\maketitle\relax
   \global\let\@maketitle\relax
-  \global\let\@thanks\@empty
+  \global\let\@acknowledgments\@empty
   \global\let\@author\@empty
   \global\let\@date\@empty
   \global\let\@title\@empty
@@ -288,7 +288,7 @@
   \null
   \vskip 2em%
   \begin{center}%
-  \let \footnote \thanks
+  \let \footnote \acknowledgments
     {\LARGE \@title \par}%
     \vskip 1.5em%
     {\large
@@ -499,6 +499,10 @@
 \newcommand\labelitemii{\normalfont\bfseries \textendash}
 \newcommand\labelitemiii{\textasteriskcentered}
 \newcommand\labelitemiv{\textperiodcentered}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Environments
+
 \newenvironment{ZhAbstract}
 {
     \chapter*{摘要}
@@ -547,14 +551,14 @@
     
     \vspace{0.5cm}
 }
-\newenvironment{Thanks}
+\newenvironment{Acknowledgments}
 {
-    \chapter*{致謝}
+    \chapter*{\acknowledgmentsName}
     \vspace{0.5cm}
     \
     \begin{spacing}{2}
     \phantomsection % for hyperref to register this
-    \addcontentsline{toc}{chapter}{致謝}
+    \addcontentsline{toc}{chapter}{\acknowledgmentsName}
 }
 {
     \end{spacing}
@@ -669,32 +673,42 @@
 \@addtoreset {equation}{chapter}
 \renewcommand\theequation
   {\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@equation}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define Figure
+
 \newcounter{figure}[chapter]
 \renewcommand \thefigure
      {\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@figure}
 \def\fps@figure{tbp}
 \def\ftype@figure{1}
 \def\ext@figure{lof}
-\def\fnum@figure{\figurename\nobreakspace\thefigure}
+\def\fnum@figure{\figureName\nobreakspace\thefigure}
 \newenvironment{figure}
                {\@float{figure}}
                {\end@float}
 \newenvironment{figure*}
                {\@dblfloat{figure}}
                {\end@dblfloat}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define table
+
 \newcounter{table}[chapter]
 \renewcommand \thetable
      {\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@table}
 \def\fps@table{tbp}
 \def\ftype@table{2}
 \def\ext@table{lot}
-\def\fnum@table{\tablename\nobreakspace\thetable}
+\def\fnum@table{\tableName\nobreakspace\thetable}
 \newenvironment{table}
                {\@float{table}}
                {\end@float}
 \newenvironment{table*}
                {\@dblfloat{table}}
                {\end@dblfloat}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlength\abovecaptionskip
 \newlength\belowcaptionskip
 \setlength\abovecaptionskip{10\p@}
@@ -722,19 +736,26 @@
 \newcommand\@tocrmarg{2.55em}
 \newcommand\@dotsep{4.5}
 \setcounter{tocdepth}{2}
-\newcommand\tableofcontents{%
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents
+
+\newcommand\tableOfContents{%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
       \@restonecolfalse
     \fi
-    \chapter*{\contentsname
+    \chapter*{\tableOfContentsName
         \@mkboth{%
-           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+           \MakeUppercase\tableOfContentsName}{\MakeUppercase\tableOfContentsName}}%
     \@starttoc{toc}%
     \if@restonecol\twocolumn\fi
-    \addcontentsline{toc}{chapter}{目錄}
+    \addcontentsline{toc}{chapter}{\tableOfContentsName}
     }
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand*\l@part[2]{%
   \ifnum \c@tocdepth >-2\relax
     \addpenalty{-\@highpenalty}%
@@ -773,32 +794,44 @@
 \newcommand*\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
 \newcommand*\l@paragraph{\@dottedtocline{4}{10em}{5em}}
 \newcommand*\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
-\newcommand\listoffigures{%
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Figures
+
+\newcommand\listOfFigures{%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
       \@restonecolfalse
     \fi
-    \chapter*{\listfigurename}%
-      \@mkboth{\MakeUppercase\listfigurename}%
-              {\MakeUppercase\listfigurename}%
+    \chapter*{\listOfFigureName}%
+      \@mkboth{\MakeUppercase\listOfFigureName}%
+              {\MakeUppercase\listOfFigureName}%
     \@starttoc{lof}%
     \if@restonecol\twocolumn\fi
     }
 \newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
-\newcommand\listoftables{%
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Tables
+
+\newcommand\listOfTables{%
     \if@twocolumn
       \@restonecoltrue\onecolumn
     \else
       \@restonecolfalse
     \fi
-    \chapter*{\listtablename}%
+    \chapter*{\listOfTableName}%
       \@mkboth{%
-          \MakeUppercase\listtablename}%
-         {\MakeUppercase\listtablename}%
+          \MakeUppercase\listOfTableName}%
+         {\MakeUppercase\listOfTableName}%
     \@starttoc{lot}%
     \if@restonecol\twocolumn\fi
     }
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+
 \let\l@table\l@figure
 \newdimen\bibindent
 \setlength\bibindent{1.5em}
@@ -851,23 +884,36 @@
     \parindent 1em%
     \noindent
     \hb@xt@1.8em{\hss\@makefnmark}#1}
-\newcommand\contentsname{目錄}
-\newcommand\listfigurename{圖目錄}
-\newcommand\listtablename{表目錄}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The title of each environment
+
+\newcommand\acknowledgmentsName{致謝}
+\newcommand\tableOfContentsName{目錄}
+\newcommand\listOfFigureName{圖目錄}
+\newcommand\listOfTableName{表目錄}
+\newcommand\referencesName{參考文獻}
 \newcommand\bibname{Bibliography}
 \newcommand\indexname{Index}
-\newcommand\figurename{圖}
-\newcommand\tablename{表}
+\newcommand\figureName{圖}
+\newcommand\tableName{表}
 \newcommand\partname{Part}
 \newcommand\chaptername{Chapter}
 \newcommand\appendixname{Appendix}
 \newcommand\abstractname{Abstract}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font size
+
 \def\huge{\@setfontsize{\huge}{24}{24pt}}
 \def\LARGE{\@setfontsize{\LARGE}{20}{20pt}}
 \def\Large{\@setfontsize{\Large}{18}{18pt}}
 \def\large{\@setfontsize{\large}{14}{14pt}}
 \def\normalsize{\@setfontsize{\normalsize}{12}{12pt}}
 \def\text{\@setfontsize{\text}{12}{12pt}}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \def\today{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi
