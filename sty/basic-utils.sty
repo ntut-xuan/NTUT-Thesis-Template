@@ -1,0 +1,138 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic Utils
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\removeLeadingZero}[1]{%
+  \ifnum#1<10 #1\else#1\fi
+}
+
+\newcommand{\mapNumToMonthTextEn}[1]{
+  \ifcase#1\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December\fi
+}
+
+% 中文數字轉換（0～9）
+\newcommand{\mapNumToTextZhTw}[1]{%
+  \ifcase#1 零\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\fi
+}
+
+% 阿拉伯數轉中文數字（支援 1~999）
+\newcommand{\mapNumberToTextZhTw}[1]{%
+  \ifnum#1<10
+    \mapNumToTextZhTw{#1}%
+  \else
+    \ifnum#1<100
+      \mapNumToTextZhTw{\numexpr#1/10\relax}十%
+      \ifnum\numexpr#1-\numexpr(#1/10)*10\relax>0
+        \mapNumToTextZhTw{\numexpr#1-\numexpr(#1/10)*10\relax}%
+      \fi
+    \else
+      \mapNumToTextZhTw{\numexpr#1/100\relax}百%
+      \ifnum\numexpr(#1/10)-(\numexpr#1/100)*10\relax>0
+        \mapNumToTextZhTw{\numexpr(#1/10)-(\numexpr#1/100)*10\relax}十%
+      \fi
+      \ifnum\numexpr#1-\numexpr(#1/10)*10\relax>0
+        \mapNumToTextZhTw{\numexpr#1-\numexpr(#1/10)*10\relax}%
+      \fi
+    \fi
+  \fi
+}
+
+% ==================================================
+% ISO 8601
+
+\newcommand{\mapIsoDateToIsoYear}[1]{
+  \begingroup
+  \def\year{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\year{##1}%
+  }%
+  \expandafter\processdate#1\@nil
+  \year%
+  \endgroup
+}
+
+\newcommand{\mapIsoDateToIsoMonth}[1]{
+  \begingroup
+  \def\month{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\month{##2}%
+  }%
+  \expandafter\processdate#1\@nil
+  \month%
+  \endgroup
+}
+
+\newcommand{\mapIsoDateToIsoMonthTextEn}[1]{
+  \begingroup
+  \def\month{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\month{##2}%
+  }%
+  \expandafter\processdate#1\@nil
+  \mapNumToMonthTextEn\month%
+  \endgroup
+}
+
+\newcommand{\mapIsoDateToIsoDay}[1]{
+  \begingroup
+  \def\day{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\day{##3}%
+  }%
+  \expandafter\processdate#1\@nil
+  \day%
+  \endgroup
+}
+
+% ==================================================
+% Anno Domini (AD)
+\newcommand{\AdDate}[1]{%
+  \begingroup
+  \def\year{}%
+  \def\month{}%
+  \def\day{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\year{##1}%
+    \def\month{##2}%
+    \def\day{##3}%
+  }%
+  \expandafter\processdate#1\@nil
+  \mapNumToMonthTextEn{\month}\ \year%
+  \endgroup
+}
+
+\newcommand{\AdDateWithComma}[1]{%
+  \begingroup
+  \def\year{}%
+  \def\month{}%
+  \def\day{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\year{##1}%
+    \def\month{##2}%
+    \def\day{##3}%
+  }%
+  \expandafter\processdate#1\@nil
+  \mapNumToMonthTextEn{\month}, \year%
+  \endgroup
+}
+
+% ==================================================
+% Republic of China (ROC)
+
+% 主函數：輸出中華民國年＋月（支援 \RocDate{yyyy-mm-dd}）
+\newcommand{\RocDate}[1]{%
+  \begingroup
+  \def\year{}%
+  \def\month{}%
+  \def\day{}%
+  \def\processdate##1-##2-##3\@nil{%
+    \def\year{##1}%
+    \def\month{##2}%
+    \def\day{##3}%
+  }%
+  \expandafter\processdate#1\@nil
+  \def\ROCyear{\number\numexpr\year-1911\relax}%
+  \def\ROCyearText{\mapNumberToTextZhTw{\ROCyear}}%
+  中華民國\ROCyearText 年\mapNumberToTextZhTw{\month} 月%
+  \endgroup
+}

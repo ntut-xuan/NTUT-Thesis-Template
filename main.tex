@@ -13,55 +13,113 @@
 \usepackage{zhnumber}
 \usepackage{titlesec}
 \usepackage{amsmath}
-\usepackage[backend=bibtex,sorting=none]{biblatex}   
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\usepackage{enumitem}
+\usepackage[nameinlink]{cleveref}
 
-\renewcommand{\baselinestretch}{1.5}
-\xeCJKsetup{AutoFakeBold=true, AutoFakeSlant=true}
-\setCJKmainfont{標楷體} % 中文字體
-\setmainfont{Times New Roman} % 英文字體
-\geometry{a4paper,total={297mm,210mm},top=4.5cm,bottom=0.75cm,left=2.5cm,right=2.2cm} % 頁面設定，不需修改
+\input{./labels/labels.sty}
+\input{./sty/basic-utils.sty}
+\input{./sty/layout.sty}
+\input{./sty/renewcommands.sty}
+
+% Use cleveref to automatically include labels like "Figure" and "Table" in \cref references.
+% 使用 cleveref 套件，讓 \cref 自動顯示「圖」、「表」等前綴。
+\ifthenelse{\equal{\ntutThesisLanguage}{en}}
+{
+    \crefname{figure}{\figureName}{\figureName{s}}
+    \crefname{table}{\tableName}{\tableName{s}}
+}
+{
+    \crefname{figure}{\figureName}{\figureName}
+    \crefname{table}{\tableName}{\tableName}
+}
+
 \pagestyle{plain} % 頁碼
-\addbibresource{reference.bib}
 
-\input{ntut-labels.tex}
+\addbibresource{./bib/references.bib}      % 加入參考文獻檔案 reference.bib，用於 BibLaTeX 管理文獻
+\graphicspath{{./assets/figures/}}  % 設定圖檔的預設路徑為 assets/figures 資料夾
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contents
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
-% 封面、不用浮水印 Cover without a watermark
-\include{page/titlepage.tex}
-% 留白頁、不用浮水印 Blank page without a watermark
-\include{page/blankpage.tex}
+% TODO
+% --------------------------------------------------
+% 
+% I'm too lazy to use the .tex file for the book spine, 
+% so please just use the Word template provided by the school to complete it.
+% 
+% --------------------------------------------------
+% 
+% 書背的 tex file 我懶得用，請直接用學校提供的 Word 模板完成
+\ifthenelse{\equal{\ntutThesisPurpose}{paperCopies}}
+{
+    \includepdf[pages=-, trim=0mm 25.4mm 0mm -25.4mm]{static-page/spine.pdf}
+}
 
-% 新增浮水印 Add Watermarks
-\CenterWallPaper{.64}{ntut-logo.png}
+% Cover without a watermark
+% --------------------------------------------------
+% 封面、不用浮水印
+\ifthenelse{\equal{\ntutThesisPurpose}{paperCopies}}
+{
+    \input{page/titlepage.tex}
+}
 
-% 封面、要浮水印 Cover with a watermark
-\include{page/titlepage.tex}
-% 「學位論文口試委員會審定書」掃描檔，請檢附完整簽名之審定書掃描檔
+% Blank page without a watermark
+% --------------------------------------------------
+% 留白頁、不用浮水印
+\ifthenelse{\equal{\ntutThesisPurpose}{paperCopies}}
+{
+    \input{page/blankpage.tex}
+}
+
+% Add Watermarks
+% 新增浮水印
+\CenterWallPaper{.64}{logo/ntut-logo.png}
+
+% Cover with a watermark
+% 封面、要浮水印
+\input{page/titlepage.tex}
+
 % Please add "Oral Defense Committee Signature Form" with complete signatures.
-\includepdf[pages=-]{static-page/signpage.pdf}
+% 「學位論文口試委員會審定書」掃描檔，請檢附完整簽名之審定書掃描檔
+\includepdf[pages=-, trim=0mm 25.4mm 0mm -25.4mm]{static-page/oral-defense-verification.pdf}
 
+% Preface page numbers: lowercase Roman numerals.
+% 前言頁碼：小寫羅馬數字
 \pagenumbering{roman}
 
-% 摘要頁（中文）Abstract (Chinese)
-% If you don’t have Chinese abstract, please delete this one.
-\include{page/abstract.tex}
-% 摘要頁（英文）Abstract (English)
-\include{page/abstract-en.tex}
-% 鳴謝 Acknowledgements
-\include{page/thanks.tex}
-% 目錄、表目錄與圖目錄 Table of Contents, List of tables, List of figures
-\include{page/table-of-content.tex}
+% Abstract (Chinese)
+% 摘要頁（中文）
+\ifthenelse{\equal{\ntutThesisLanguage}{zh-tw}}
+{
+    \input{page/abstract.tex}
+}
+
+% Abstract (English)
+% 摘要頁（英文）
+\input{page/abstract-en.tex}
+
+% Acknowledgements
+% 致謝 
+\input{page/acknowledgments.tex}
+
+% Table of Contents, List of tables, List of figures
+% 目錄、表目錄與圖目錄
+\input{page/table-of-content.tex}
  
+% Main text page numbers: Arabic numerals, starting again from page 1.
+% 正文頁碼：阿拉伯數字，並重新編號為第 1 頁
 \pagenumbering{arabic}
 
-% 章節一 Chapter 1
-\include{chapter/chapter1-introduction.tex}
-% 章節二 Chapter 2
-\include{chapter/chapter2-related-work.tex}
-% 新增你自己的章節... Add chapters here
+\input{chapter/_chapter-manager.tex}
 
+% Please insert citations within the paragraphs as appropriate. 
+% Ensure that the reference.bib file is included for proper reference management.
+% 
 % 參考文獻，請在段落上隨意註解，你同時需要 reference.bib
-\include{page/reference}
+\input{page/reference}
 
 \end{document}

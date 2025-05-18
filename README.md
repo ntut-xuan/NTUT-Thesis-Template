@@ -1,37 +1,86 @@
+<div align="right">
+
+[![](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+
+</div>
+
+<!-- Logo -->
+<p align="center">
+    <img src="https://sec.ntut.edu.tw/var/file/27/1027/img/920/916415378.jpg" alt="NTUT" height="150px">
+</p>
+
+</div>
+
+<!-- Title and Description -->
+<div align="center">
+
 # NTUT-Thesis-Template
 
-基於 XeLaTeX 的北科論文模板。
+![](https://img.shields.io/badge/LaTeX%202%CE%B5-3.14159265-blueviolet?logo=latex&style=flat-square)
+<br>
+![](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg?style=flat-square)
+[![](https://img.shields.io/badge/Overleaf%20-Open%20as%20Template-46a247?logo=overleaf&style=flat-square)]()
 
-喜歡的話就點個右上角的星星：）
+*Language Options: [English](README.md), [繁體中文](README-zh-TW.md), [简体中文](README-zh.md)*
 
-## 快速入門
+A thesis template for National Taipei University of Technology (NTUT) based on XeLaTeX.
 
-### texlive 安裝
+If you like it, click the star at the top right. ⭐
 
-你需要 `texlive` 來開始編譯 `.tex` 檔案。
+</div>
 
-#### macOS
+## Quick Start
 
-```
+This template supports both Chinese and English thesis writing. However, some formatting settings may differ from the official Word template provided by the school. Please consult with your department before using this template.
+
+This guide includes instructions for environment setup and usage.  
+We also provide an Overleaf version to reduce configuration differences between platforms.
+
+### Environment Setup
+
+Choose one of the following methods:
+
+#### Overleaf
+
+[Open Template]()
+
+##### Compiler
+
+Before compiling, please make sure XeLaTeX is selected:
+
+1. Open your project
+2. Click the “Menu” button in the top-left corner
+3. In the sidebar, find “Compiler”
+4. Change the compiler from `pdfLaTeX` to `XeLaTeX`
+5. Close the menu
+
+Then click “Recompile”.
+
+#### texlive Installation
+
+You need `texlive` to compile `.tex` files.
+
+##### macOS
+
+```bash
 brew install texlive
 ```
 
-#### Ubuntu
-```
+##### Ubuntu
+
+```bash
 sudo apt-get update
 sudo apt-get install texlive-full
 ```
 
-### 設定文件參數與字體
+##### Fedora
 
-你可以在 `ntut-labels.tex` 進行參數的設定，例如：科系、論文名稱、學位、研究生等。
+```bash
+sudo dnf update
+sudo dnf install texlive-scheme-full
+```
 
-另外，你需要額外修改兩處：
-
-- 在 `page/abstract.tex` 與 `page/abstract-en.tex` 中，你需要在此撰寫您的論文頁數與關鍵字。
-- 在 `main.tex` 中，你可能需要修改字體的檔案，例如在 macOS 或 Linux 上似乎沒有標楷體。
-
-### 編譯 .tex 檔案
+#### Compile .tex Files
 
 #### 1. 使用 Make 指令
 
@@ -61,36 +110,66 @@ bibtex main
 xelatex main
 ```
 
-## 檔案架構
+### Usage Instructions
 
-你可以隨意新增自己的章節，以及修改中文與英文 abstract 的頁數與關鍵字。
+- Modify parameters in `./labels/labels.tex`, such as department, title, degree, and student name.
+- Store static resources like images, icons, and media files in the `./assets` folder.
+    - Images can be placed in `./assets/figures`, which is set as the default path, so you can reference images by filename directly.
+- Add references in `./bib/references.bib`
+- Edit your chapters in `./chapter`, and manage their order in `./chapter/_chapter-manager.tex`
+- Replace the following files as required:
+    - `./static-page/spine.pdf` (book spine)
+    - `./static-page/oral-defense-verification.pdf` (oral defense approval form)
+
+You do not need to modify other files to compile your thesis.
+
+## File Structure
 
 ```
-./chapter
-├── chapter1-introduction.tex <---- 章節一
-└── chapter2-related-work.tex <---- 章節二
-./static-page
-└── signpage.pdf <----------------- 「學位論文口試委員會審定書」掃描檔
-./page
-├── abstract-en.tex <-------------- 英文 abstract
-├── abstract.tex <----------------- 中文 abstract
-├── blankpage.tex <---------------- 空白頁
-├── reference.tex <---------------- 參考文獻
-├── table-of-content.tex <--------- 各式各樣的目錄
-├── thanks.tex <------------------- 致謝
-└── titlepage.tex <---------------- 首頁
-ntut-labels.tex <------------------ 各式各樣的 label 設定值
-ntut-logo-with-label.png <--------- 北科 Logo（有國立臺北科技大學字樣）
-ntut-logo.png <-------------------- 北科 Logo 浮水印
-ntut-reports.cls <----------------- LaTeX 樣式
-reference.bib <-------------------- 參考文獻 bib 檔
+├── assets
+│   └── figures
+│       └── image.jpeg
+├── bib
+│   └── references.bib
+├── chapter
+│   ├── _chapter-manager.tex
+│   ├── chapter1-introduction.tex
+│   └── chapter2-related-work.tex
+├── labels
+│   └── labels.tex
+├── logo
+│   ├── ntut-logo-with-label.png
+│   └── ntut-logo.png
+├── page
+│   ├── abstract-en.tex
+│   ├── abstract.tex
+│   ├── blankpage.tex
+│   ├── reference.tex
+│   ├── table-of-content.tex
+│   ├── acknowledgments.tex
+│   └── titlepage.tex
+├── static-page
+│   ├── oral-defense-verification.pdf
+│   └── spine.pdf
+├── sty
+│   ├── basic-utils.sty
+│   ├── layout.sty
+│   └── renewcommands.sty
+├── ntut-reports.cls
+└── main.tex
 ```
 
-## 特別感謝
+## TODO
 
-這份專案的存在，得特別感謝：
+On macOS or Linux, the font `標楷體` may not be available. You will need to modify the font setting in `./sty/layout.sty`.
 
-- 國立臺北科技大學 資訊工程系 孫勤昱老師
-- 國立臺北科技大學 資訊工程系 陳昱圻老師
+Overleaf support is not yet officially released. Please manually import this project into Overleaf for now.
 
-感謝兩位老師給予機會與協助！
+## Acknowledgements
+
+Special thanks to:
+
+- Prof. Chin-Yu Sun, Department of Computer Science and Information Engineering, NTUT  
+- Prof. Yu-Chi Chen, Department of Computer Science and Information Engineering, NTUT
+
+Thank you for your guidance and support!

@@ -1,0 +1,42 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Layouts
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\baselinestretch}{1.5}    % 將行距設為原來的 1.5 倍
+\xeCJKsetup{
+    AutoFakeBold=true,                  % 若所用中文字體不提供粗體版本，自動模擬出粗體效果。
+    AutoFakeSlant=true,                 % 若所用中文字體不提供斜體版本，自動模擬出斜體效果。
+}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Customize fonts for cross-platform compatibility.
+% 調整字體以實驗跨平台相容性
+
+\ifthenelse{\equal{\platformFont}{overleaf}}{
+    \setCJKmainfont{AR PL KaitiM Big5}      % 中文字體
+    \setmainfont{Times New Roman}           % 英文字體
+}
+
+\ifthenelse{\equal{\platformFont}{windows}}{
+    \setCJKmainfont{標楷體}                 % 中文字體
+    \setmainfont{Times New Roman}           % 英文字體
+}
+
+\ifthenelse{\equal{\platformFont}{linux}}{
+    % TODO
+}
+
+\ifthenelse{\equal{\platformFont}{macOs}}{
+    % TODO
+}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 頁面設定，不需修改
+\geometry{
+    a4paper,
+    total={297mm,210mm},
+    top=4.5cm,
+    bottom=0.75cm,
+    left=2.5cm,
+    right=2.2cm,
+}
